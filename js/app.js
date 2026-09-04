@@ -638,7 +638,7 @@ const ThemeToggle = (function () {
 
   // DOM ─────────────────────────────────────────────────────
 
-  function applyTheme(theme) {
+  function applyTheme(theme, notify = false) {
     if (_isBrowser) document.body.dataset.theme = theme;
     StorageService.write(StorageService.KEYS.THEME, theme);
 
@@ -647,16 +647,26 @@ const ThemeToggle = (function () {
       btn.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
       btn.textContent = theme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
     }
+
+    if (notify) {
+      const label = theme === 'dark' ? 'Dark mode enabled' : 'Light mode enabled';
+      const statusEl = _getEl('settings-theme-status');
+      if (statusEl) {
+        statusEl.textContent = label;
+        setTimeout(() => { statusEl.textContent = ''; }, 3000);
+      }
+      NotificationService.show(label, 'info');
+    }
   }
 
   function init(savedTheme) {
     const theme = (savedTheme === 'dark' || savedTheme === 'light') ? savedTheme : 'light';
-    applyTheme(theme);
+    applyTheme(theme, false); // silent on load
 
     const btn = _getEl('theme-toggle');
     if (btn) {
       btn.addEventListener('click', () => {
-        applyTheme(toggleTheme(document.body.dataset.theme));
+        applyTheme(toggleTheme(document.body.dataset.theme), true); // notify on user click
       });
     }
   }

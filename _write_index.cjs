@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+﻿const fs = require('fs');
+const path = require('path');
+
+const html = <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -15,41 +18,27 @@
         document.body.dataset.theme = 'light';
       }
     })();
-  </script>
+  <\/script>
 
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body data-theme="light">
-  <!-- ═══════════════════════════════════════════════
-       Background wallpaper
-  ═══════════════════════════════════════════════ -->
+  <!-- Background wallpaper -->
   <wallpaper id="wallpaper">
       <img src="./media/picture/bg.webp">
   </wallpaper>
 
-  <!-- ═══════════════════════════════════════════════
-       Greeting Widget
-  ═══════════════════════════════════════════════ -->
+  <!-- Greeting Widget -->
   <header class="widget widget--greeting" aria-label="Greeting">
     <p id="greeting-time" class="greeting__time">--:--</p>
     <p id="greeting-date" class="greeting__date"></p>
     <p id="greeting-text" class="greeting__text"></p>
   </header>
 
-  <!-- ═══════════════════════════════════════════════
-       Placeholder Section (future features)
-  ═══════════════════════════════════════════════
-  <section class="widget widget--placeholder" aria-label="Coming soon">
-    <p class="placeholder__label">Coming Soon &amp; Sounds</p>
-  </section>
-  -->
-
   <!-- Notification container (managed by NotificationService) -->
   <div id="notifications" class="notifications" aria-live="polite" aria-atomic="true"></div>
 
-  <!-- ═══════════════════════════════════════════════
-       Focus Timer Widget
-  ═══════════════════════════════════════════════ -->
+  <!-- Focus Timer Widget -->
   <section class="widget widget--timer" aria-label="Focus Timer">
     <h2 class="widget__title">Focus Timer</h2>
     <p id="timer-display" class="timer__display">25:00</p>
@@ -61,9 +50,7 @@
     <p id="timer-error" class="inline-error" role="alert" aria-live="polite"></p>
   </section>
 
-  <!-- ═══════════════════════════════════════════════
-       To-Do List Widget
-  ═══════════════════════════════════════════════ -->
+  <!-- To-Do List Widget -->
   <section class="widget widget--todo" aria-label="To-Do List">
     <h2 class="widget__title">To-Do</h2>
     <form id="todo-form" class="todo__form" novalidate>
@@ -72,7 +59,7 @@
         id="todo-input"
         type="text"
         class="input"
-        placeholder="Add a task..."
+        placeholder="Add a task\u2026"
         maxlength="500"
         autocomplete="off"
         aria-describedby="todo-error"
@@ -84,9 +71,7 @@
     <p id="todo-empty" class="empty-state">No tasks yet. Add one above!</p>
   </section>
 
-  <!-- ═══════════════════════════════════════════════
-       Quick Links Widget
-  ═══════════════════════════════════════════════ -->
+  <!-- Quick Links Widget -->
   <section class="widget widget--links" aria-label="Quick Links">
     <h2 class="widget__title">Quick Links</h2>
     <form id="links-form" class="links__form" novalidate>
@@ -118,9 +103,7 @@
     <p id="links-empty" class="empty-state">No links yet. Add one above!</p>
   </section>
 
-  <!-- ═══════════════════════════════════════════════
-       Settings Panel
-  ═══════════════════════════════════════════════ -->
+  <!-- Settings Panel -->
   <section class="widget widget--settings" aria-label="Settings">
     <h2 class="widget__title">Settings</h2>
 
@@ -156,12 +139,17 @@
 
     <div class="settings__form settings__form--theme">
       <span class="settings__label">Theme</span>
-      <button id="theme-toggle" class="btn btn--secondary" aria-pressed="false" aria-label="Toggle dark mode">🌙 Dark Mode</button>
+      <button id="theme-toggle" class="btn btn--secondary" aria-pressed="false" aria-label="Toggle dark mode">\uD83C\uDF19 Dark Mode</button>
       <p id="settings-theme-status" class="inline-error" role="status" aria-live="polite" style="color:var(--color-text-muted)"></p>
     </div>
 
   </section>
 
-  <script type="module" src="js/app.js"></script>
+  <script type="module" src="js/app.js"><\/script>
 </body>
 </html>
+;
+
+const dest = path.join(__dirname, 'index.html');
+fs.writeFileSync(dest, html, 'utf8');
+console.log('written');
