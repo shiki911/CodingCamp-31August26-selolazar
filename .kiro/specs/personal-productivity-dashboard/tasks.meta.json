@@ -1,0 +1,260 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "1. Set up project structure and test framework": [
+      {
+        "executionId": "b844130e-961f-43f3-8907-46d6ed509829",
+        "chatSessionId": "sess_a620bf10-c5ad-4a95-9eb0-85146bfbd505",
+        "timestamp": 1788483256584
+      },
+      {
+        "executionId": "b844130e-961f-43f3-8907-46d6ed509829",
+        "chatSessionId": "sess_a620bf10-c5ad-4a95-9eb0-85146bfbd505",
+        "timestamp": 1788483276981
+      },
+      {
+        "executionId": "b844130e-961f-43f3-8907-46d6ed509829",
+        "chatSessionId": "sess_a620bf10-c5ad-4a95-9eb0-85146bfbd505",
+        "timestamp": 1788483944064
+      }
+    ],
+    "2.1 Write `StorageService` in `js/app.js` with the `KEYS` registry, `read`, `write`, `remove`, and `hydrate` methods": [
+      {
+        "executionId": "b844130e-961f-43f3-8907-46d6ed509829",
+        "chatSessionId": "sess_a620bf10-c5ad-4a95-9eb0-85146bfbd505",
+        "timestamp": 1788483256915
+      },
+      {
+        "executionId": "b844130e-961f-43f3-8907-46d6ed509829",
+        "chatSessionId": "sess_a620bf10-c5ad-4a95-9eb0-85146bfbd505",
+        "timestamp": 1788483950534
+      },
+      {
+        "executionId": "b844130e-961f-43f3-8907-46d6ed509829",
+        "chatSessionId": "sess_a620bf10-c5ad-4a95-9eb0-85146bfbd505",
+        "timestamp": 1788484135422
+      }
+    ],
+    "3.1 Write `formatTime(hour, minute)`, `formatDate(date)`, `getGreetingPrefix(hour)`, and `buildGreeting(prefix, name)` as pure functions": [
+      {
+        "executionId": "b844130e-961f-43f3-8907-46d6ed509829",
+        "chatSessionId": "sess_a620bf10-c5ad-4a95-9eb0-85146bfbd505",
+        "timestamp": 1788483257165
+      },
+      {
+        "executionId": "b844130e-961f-43f3-8907-46d6ed509829",
+        "chatSessionId": "sess_a620bf10-c5ad-4a95-9eb0-85146bfbd505",
+        "timestamp": 1788484141184
+      }
+    ],
+    "4.1 Write `formatTimer(totalSeconds)` and `validateTimerDuration(value)` as pure functions": [
+      {
+        "executionId": "b844130e-961f-43f3-8907-46d6ed509829",
+        "chatSessionId": "sess_a620bf10-c5ad-4a95-9eb0-85146bfbd505",
+        "timestamp": 1788483257336
+      },
+      {
+        "executionId": "b844130e-961f-43f3-8907-46d6ed509829",
+        "chatSessionId": "sess_a620bf10-c5ad-4a95-9eb0-85146bfbd505",
+        "timestamp": 1788484145489
+      }
+    ],
+    "4.3 Write `sanitizeName(raw)` and `validateDuration(value)` as pure functions": [
+      {
+        "executionId": "b844130e-961f-43f3-8907-46d6ed509829",
+        "chatSessionId": "sess_a620bf10-c5ad-4a95-9eb0-85146bfbd505",
+        "timestamp": 1788483257515
+      },
+      {
+        "executionId": "b844130e-961f-43f3-8907-46d6ed509829",
+        "chatSessionId": "sess_a620bf10-c5ad-4a95-9eb0-85146bfbd505",
+        "timestamp": 1788484149598
+      }
+    ],
+    "5.1 Write `validateTask(description)`, `serializeTasks(tasks)`, and `deserializeTasks(json)` as pure functions": [
+      {
+        "executionId": "b844130e-961f-43f3-8907-46d6ed509829",
+        "chatSessionId": "sess_a620bf10-c5ad-4a95-9eb0-85146bfbd505",
+        "timestamp": 1788483257612
+      },
+      {
+        "executionId": "b844130e-961f-43f3-8907-46d6ed509829",
+        "chatSessionId": "sess_a620bf10-c5ad-4a95-9eb0-85146bfbd505",
+        "timestamp": 1788484154184
+      }
+    ],
+    "6.1 Write `validateLink(label, url)`, `normalizeUrl(url)`, and `toggleTheme(current)` as pure functions": [
+      {
+        "executionId": "b844130e-961f-43f3-8907-46d6ed509829",
+        "chatSessionId": "sess_a620bf10-c5ad-4a95-9eb0-85146bfbd505",
+        "timestamp": 1788483257703
+      },
+      {
+        "executionId": "b844130e-961f-43f3-8907-46d6ed509829",
+        "chatSessionId": "sess_a620bf10-c5ad-4a95-9eb0-85146bfbd505",
+        "timestamp": 1788484159476
+      }
+    ],
+    "7. Checkpoint — Ensure all pure-logic tests pass": [
+      {
+        "executionId": "b844130e-961f-43f3-8907-46d6ed509829",
+        "chatSessionId": "sess_a620bf10-c5ad-4a95-9eb0-85146bfbd505",
+        "timestamp": 1788483257841
+      }
+    ],
+    "8.1 Write `AudioService` in `js/app.js`": [
+      {
+        "executionId": "b844130e-961f-43f3-8907-46d6ed509829",
+        "chatSessionId": "sess_a620bf10-c5ad-4a95-9eb0-85146bfbd505",
+        "timestamp": 1788483257937
+      }
+    ],
+    "8.2 Write `NotificationService` in `js/app.js`": [
+      {
+        "executionId": "b844130e-961f-43f3-8907-46d6ed509829",
+        "chatSessionId": "sess_a620bf10-c5ad-4a95-9eb0-85146bfbd505",
+        "timestamp": 1788483258042
+      }
+    ],
+    "9.1 Write the `GreetingWidget` module object in `js/app.js` with `init(name)` and `setName(name)` methods": [
+      {
+        "executionId": "b844130e-961f-43f3-8907-46d6ed509829",
+        "chatSessionId": "sess_a620bf10-c5ad-4a95-9eb0-85146bfbd505",
+        "timestamp": 1788483258133
+      }
+    ],
+    "9.2 Add the Greeting Widget markup to `index.html` and its styles to `css/style.css`": [
+      {
+        "executionId": "b844130e-961f-43f3-8907-46d6ed509829",
+        "chatSessionId": "sess_a620bf10-c5ad-4a95-9eb0-85146bfbd505",
+        "timestamp": 1788483258235
+      }
+    ],
+    "10.1 Write the `FocusTimer` module object in `js/app.js` with `init`, `setDuration`, `start`, `stop`, and `reset` methods": [
+      {
+        "executionId": "b844130e-961f-43f3-8907-46d6ed509829",
+        "chatSessionId": "sess_a620bf10-c5ad-4a95-9eb0-85146bfbd505",
+        "timestamp": 1788483258332
+      }
+    ],
+    "10.2 Add the Focus Timer markup to `index.html` and its styles to `css/style.css`": [
+      {
+        "executionId": "b844130e-961f-43f3-8907-46d6ed509829",
+        "chatSessionId": "sess_a620bf10-c5ad-4a95-9eb0-85146bfbd505",
+        "timestamp": 1788483258460
+      }
+    ],
+    "11.1 Write the `TodoList` module object in `js/app.js` with `init`, `addTask`, `editTask`, `toggleComplete`, and `deleteTask` methods": [
+      {
+        "executionId": "b844130e-961f-43f3-8907-46d6ed509829",
+        "chatSessionId": "sess_a620bf10-c5ad-4a95-9eb0-85146bfbd505",
+        "timestamp": 1788483258569
+      }
+    ],
+    "11.2 Add the To-Do List markup to `index.html` and its styles to `css/style.css`": [
+      {
+        "executionId": "b844130e-961f-43f3-8907-46d6ed509829",
+        "chatSessionId": "sess_a620bf10-c5ad-4a95-9eb0-85146bfbd505",
+        "timestamp": 1788483258685
+      }
+    ],
+    "12.1 Write the `QuickLinks` module object in `js/app.js` with `init`, `addLink`, and `deleteLink` methods": [
+      {
+        "executionId": "b844130e-961f-43f3-8907-46d6ed509829",
+        "chatSessionId": "sess_a620bf10-c5ad-4a95-9eb0-85146bfbd505",
+        "timestamp": 1788483258790
+      }
+    ],
+    "12.2 Add the Quick Links markup to `index.html` and its styles to `css/style.css`": [
+      {
+        "executionId": "b844130e-961f-43f3-8907-46d6ed509829",
+        "chatSessionId": "sess_a620bf10-c5ad-4a95-9eb0-85146bfbd505",
+        "timestamp": 1788483258892
+      }
+    ],
+    "13.1 Write the `ThemeToggle` module object in `js/app.js` with `init(savedTheme)` and `applyTheme(theme)` methods": [
+      {
+        "executionId": "b844130e-961f-43f3-8907-46d6ed509829",
+        "chatSessionId": "sess_a620bf10-c5ad-4a95-9eb0-85146bfbd505",
+        "timestamp": 1788483258983
+      }
+    ],
+    "13.2 Add the inline theme-init `<script>` in `<head>` of `index.html`": [
+      {
+        "executionId": "b844130e-961f-43f3-8907-46d6ed509829",
+        "chatSessionId": "sess_a620bf10-c5ad-4a95-9eb0-85146bfbd505",
+        "timestamp": 1788483259083
+      }
+    ],
+    "13.3 Add Theme Toggle markup to `index.html`; add all CSS custom property token sets and `[data-theme]` rules to `css/style.css`": [
+      {
+        "executionId": "b844130e-961f-43f3-8907-46d6ed509829",
+        "chatSessionId": "sess_a620bf10-c5ad-4a95-9eb0-85146bfbd505",
+        "timestamp": 1788483259206
+      }
+    ],
+    "14.1 Write the `SettingsPanel` module object in `js/app.js` with `init`, `lockDurationInput`, and `unlockDurationInput` methods": [
+      {
+        "executionId": "b844130e-961f-43f3-8907-46d6ed509829",
+        "chatSessionId": "sess_a620bf10-c5ad-4a95-9eb0-85146bfbd505",
+        "timestamp": 1788483259317
+      }
+    ],
+    "14.2 Add Settings Panel markup to `index.html` and its styles to `css/style.css`": [
+      {
+        "executionId": "b844130e-961f-43f3-8907-46d6ed509829",
+        "chatSessionId": "sess_a620bf10-c5ad-4a95-9eb0-85146bfbd505",
+        "timestamp": 1788483259451
+      }
+    ],
+    "15. Add Placeholder Section markup and styles": [
+      {
+        "executionId": "b844130e-961f-43f3-8907-46d6ed509829",
+        "chatSessionId": "sess_a620bf10-c5ad-4a95-9eb0-85146bfbd505",
+        "timestamp": 1788483259611
+      }
+    ],
+    "16. Checkpoint — Ensure all unit tests pass": [
+      {
+        "executionId": "b844130e-961f-43f3-8907-46d6ed509829",
+        "chatSessionId": "sess_a620bf10-c5ad-4a95-9eb0-85146bfbd505",
+        "timestamp": 1788483259730
+      }
+    ],
+    "17.1 Write the `App` initializer at the bottom of `js/app.js`": [
+      {
+        "executionId": "b844130e-961f-43f3-8907-46d6ed509829",
+        "chatSessionId": "sess_a620bf10-c5ad-4a95-9eb0-85146bfbd505",
+        "timestamp": 1788483259826
+      }
+    ],
+    "17.2 Add `<script src=\"js/app.js\">` to `index.html`; verify load order (inline theme-init script first, then deferred `app.js`)": [
+      {
+        "executionId": "b844130e-961f-43f3-8907-46d6ed509829",
+        "chatSessionId": "sess_a620bf10-c5ad-4a95-9eb0-85146bfbd505",
+        "timestamp": 1788483259921
+      }
+    ],
+    "18.1 Write the responsive CSS grid/flexbox layout in `css/style.css`": [
+      {
+        "executionId": "b844130e-961f-43f3-8907-46d6ed509829",
+        "chatSessionId": "sess_a620bf10-c5ad-4a95-9eb0-85146bfbd505",
+        "timestamp": 1788483260039
+      }
+    ],
+    "19. Final checkpoint — full test suite and file://  smoke check": [
+      {
+        "executionId": "b844130e-961f-43f3-8907-46d6ed509829",
+        "chatSessionId": "sess_a620bf10-c5ad-4a95-9eb0-85146bfbd505",
+        "timestamp": 1788483260141
+      }
+    ],
+    "2. Implement StorageService": [
+      {
+        "executionId": "b844130e-961f-43f3-8907-46d6ed509829",
+        "chatSessionId": "sess_a620bf10-c5ad-4a95-9eb0-85146bfbd505",
+        "timestamp": 1788484135511
+      }
+    ]
+  }
+}

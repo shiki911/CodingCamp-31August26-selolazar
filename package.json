@@ -1,0 +1,15 @@
+{
+  "name": "personal-productivity-dashboard",
+  "version": "1.0.0",
+  "description": "Zero-dependency, single-page personal productivity dashboard",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "vitest --run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "vitest": "5.0.0",
+    "fast-check": "4.9.0"
+  }
+}
