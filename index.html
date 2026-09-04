@@ -28,6 +28,13 @@
   </wallpaper>
 
   <!-- ═══════════════════════════════════════════════
+       Background song
+  ═══════════════════════════════════════════════ -->
+  <audio id="bg-song" loop preload="auto">
+    <source src="./media/mp3/[no copyright music]  coffee time  cute vlog music.mp3" type="audio/mp3">
+  </audio>
+
+  <!-- ═══════════════════════════════════════════════
        Greeting Widget
   ═══════════════════════════════════════════════ -->
   <header class="widget widget--greeting" aria-label="Greeting">
@@ -158,6 +165,15 @@
       <span class="settings__label">Theme</span>
       <button id="theme-toggle" class="btn btn--secondary" aria-pressed="false" aria-label="Toggle dark mode">🌙 Dark Mode</button>
       <p id="settings-theme-status" class="inline-error" role="status" aria-live="polite" style="color:var(--color-text-muted)"></p>
+    </div>
+
+    <div class="settings__form settings__form--music">
+      <span class="settings__label">Background Music</span>
+      <div class="music-controls">
+        <button id="music-play-btn" class="btn btn--secondary" aria-label="Play background music">▶ Play</button>
+        <button id="music-stop-btn" class="btn btn--secondary" aria-label="Stop background music" disabled>■ Stop</button>
+      </div>
+      <p id="settings-music-status" class="inline-error" role="status" aria-live="polite" style="color:var(--color-text-muted)"></p>
     </div>
 
   </section>

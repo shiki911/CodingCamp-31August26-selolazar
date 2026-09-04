@@ -4,12 +4,18 @@
    literals outside of these two [data-theme] rule sets.
 ═══════════════════════════════════════════════════════════ */
 
+/* ─── Fonts ──────────────────────────────────────── */
+@font-face {
+  font-family: 'DS-DIGITAL';
+  src: url("../media/font/DS-DIGI.TTF") format('truetype');
+}
+
 /* ─── Theme tokens ──────────────────────────────────────── */
 
 [data-theme="light"] {
   --color-bg:            #f9f9f9;
   --color-surface:       #ffffff;
-  --color-border:        #e0e0e0;
+  --color-border:        #374151;
   --color-text:          #1a1a1a;
   --color-text-muted:    #666666;
   --color-accent:        #2563eb;
@@ -22,7 +28,7 @@
 [data-theme="dark"] {
   --color-bg:            #111827;
   --color-surface:       #1f2937;
-  --color-border:        #374151;
+  --color-border:        #e0e0e0;
   --color-text:          #f9fafb;
   --color-text-muted:    #9ca3af;
   --color-accent:        #60a5fa;
@@ -97,10 +103,13 @@ body {
 /* ─── Widget shell ──────────────────────────────────────── */
 
 .widget {
-  background-color: var(--color-surface);
+  backdrop-filter: blur(10px);
+
   border: 1px solid var(--color-border);
-  border-radius: 0.75rem;
+  border-radius: 1rem;
   padding: 1.25rem;
+
+  background-color: (in srgb, var(--color-surface) 10%, transparent)
 }
 
 /* ─── Greeting widget ───────────────────────────────────── */
@@ -127,9 +136,10 @@ body {
 /* ─── Timer widget ──────────────────────────────────────── */
 
 .timer__display {
+  font-family: 'DS-DIGITAL', monospace;
   font-size: 3.5rem;
   font-weight: 700;
-  font-variant-numeric: tabular-nums;
+  
   color: var(--color-text);
   margin-bottom: 1rem;
 }
@@ -263,6 +273,16 @@ body {
   width: 100%;
 }
 
+.settings__form--music {
+  align-items: center;
+}
+
+.music-controls {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
 /* ─── Placeholder section ───────────────────────────────── */
 
 .widget--placeholder {
@@ -392,7 +412,11 @@ body {
   font-size: 0.9rem;
   color: #ffffff;
   pointer-events: auto;
-  animation: toast-in 0.2s ease;
+  animation: toast-in 0.2s ease forwards;
+}
+
+.toast--leaving {
+  animation: toast-out 0.35s ease forwards;
 }
 
 .toast--success { background-color: var(--color-success); }
@@ -402,6 +426,11 @@ body {
 @keyframes toast-in {
   from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0);   }
+}
+
+@keyframes toast-out {
+  from { opacity: 1; transform: translateY(0);   }
+  to   { opacity: 0; transform: translateY(-6px); }
 }
 
 /* ─── Screen-reader only utility ────────────────────────── */

@@ -111,10 +111,14 @@ const NotificationService = (function () {
     toast.setAttribute('role', 'status');
     container.appendChild(toast);
 
-    const duration = type === 'error' ? 3000 : 2000;
+    const displayDuration = type === 'error' ? 3000 : 2000;
     setTimeout(() => {
-      if (toast.parentNode) toast.parentNode.removeChild(toast);
-    }, duration);
+      toast.classList.add('toast--leaving');
+      // wait for the 0.35s fade-out animation to finish before removing
+      setTimeout(() => {
+        if (toast.parentNode) toast.parentNode.removeChild(toast);
+      }, 350);
+    }, displayDuration);
   }
 
   return { show };
@@ -123,35 +127,133 @@ const NotificationService = (function () {
 
 // ─────────────────────────────────────────────────────────
 // AudioService
-// Synthesizes a 440 Hz sine-wave beep via Web Audio API.
+// Plays audio files for timer tick and completion.
+// Falls back to Web Audio API synth if files can't load.
 // ─────────────────────────────────────────────────────────
 const AudioService = (function () {
-  function playAlert(durationSeconds = 1) {
+  let _tickAudio = null;
+  let _bellAudio = null;
+
+  function _loadAudio(src) {
+    if (!_isBrowser) return null;
+    const a = new Audio(src);
+    a.preload = 'auto';
+    return a;
+  }
+
+  function _ensureLoaded() {
+    if (!_tickAudio) _tickAudio = _loadAudio('./media/mp3/clock-ticking-js.mp3');
+    if (!_bellAudio) _bellAudio = _loadAudio('./media/mp3/mixkit-clock-bells-hour-signal-1069.wav');
+  }
+
+  function playTick() {
     if (!_isBrowser) return;
+    _ensureLoaded();
+    if (!_tickAudio) return;
+    // Restart from beginning so rapid calls don't pile up
+    _tickAudio.currentTime = 0;
+    _tickAudio.play().catch(() => {});
+  }
+
+  function playAlert() {
+    if (!_isBrowser) return;
+    _ensureLoaded();
+    if (_bellAudio) {
+      _bellAudio.currentTime = 0;
+      _bellAudio.play().catch(() => _synthAlert());
+    } else {
+      _synthAlert();
+    }
+  }
+
+  function _synthAlert() {
     try {
       const AudioCtx = window.AudioContext || window.webkitAudioContext;
       if (!AudioCtx) return;
       const ctx  = new AudioCtx();
       const osc  = ctx.createOscillator();
       const gain = ctx.createGain();
-
-      osc.type      = 'sine';
+      osc.type = 'sine';
       osc.frequency.value = 440;
-      gain.gain.value     = 0.3;
-
+      gain.gain.value = 0.3;
       osc.connect(gain);
       gain.connect(ctx.destination);
-
       osc.start();
-      osc.stop(ctx.currentTime + Math.max(1, Math.min(3, durationSeconds)));
-
+      osc.stop(ctx.currentTime + 1);
       osc.onended = () => ctx.close();
-    } catch (_e) {
-      // silently swallow — autoplay policy or missing AudioContext
-    }
+    } catch (_e) {}
   }
 
-  return { playAlert };
+  return { playTick, playAlert };
+})();
+
+
+// ─────────────────────────────────────────────────────────
+// BackgroundMusic
+// Plays the looping background track via an HTML Audio element.
+// ─────────────────────────────────────────────────────────
+const BackgroundMusic = (function () {
+  let _audio = null;
+  let _playing = false;
+
+  function _getAudio() {
+    if (!_isBrowser) return null;
+    if (!_audio) {
+      _audio = new Audio('./media/mp3/[no copyright music]  coffee time  cute vlog music.mp3');
+      _audio.loop = true;
+      _audio.volume = 0.4;
+    }
+    return _audio;
+  }
+
+  function play() {
+    const audio = _getAudio();
+    if (!audio || _playing) return;
+    audio.play().then(() => {
+      _playing = true;
+      _syncButtons();
+      const statusEl = _getEl('settings-music-status');
+      if (statusEl) {
+        statusEl.textContent = 'Music playing';
+        setTimeout(() => { statusEl.textContent = ''; }, 2000);
+      }
+      NotificationService.show('Background music playing', 'info');
+    }).catch(() => {
+      NotificationService.show('Could not play music', 'error');
+    });
+  }
+
+  function stop() {
+    const audio = _getAudio();
+    if (!audio || !_playing) return;
+    audio.pause();
+    audio.currentTime = 0;
+    _playing = false;
+    _syncButtons();
+    const statusEl = _getEl('settings-music-status');
+    if (statusEl) {
+      statusEl.textContent = 'Music stopped';
+      setTimeout(() => { statusEl.textContent = ''; }, 2000);
+    }
+    NotificationService.show('Background music stopped', 'info');
+  }
+
+  function _syncButtons() {
+    const playBtn = _getEl('music-play-btn');
+    const stopBtn = _getEl('music-stop-btn');
+    if (playBtn) playBtn.disabled = _playing;
+    if (stopBtn) stopBtn.disabled = !_playing;
+  }
+
+  function init() {
+    const playBtn = _getEl('music-play-btn');
+    const stopBtn = _getEl('music-stop-btn');
+    if (playBtn) playBtn.addEventListener('click', play);
+    if (stopBtn) stopBtn.addEventListener('click', stop);
+    _syncButtons();
+  }
+
+  return { init, play, stop };
 })();
 
 
@@ -287,13 +389,14 @@ const FocusTimer = (function () {
     _intervalId = setInterval(() => {
       _remaining -= 1;
       _updateDisplay();
+      AudioService.playTick();
 
       if (_remaining <= 0) {
         clearInterval(_intervalId);
         _intervalId = null;
         _state = 'completed';
         _updateDisplay();
-        AudioService.playAlert(1);
+        AudioService.playAlert();
         SettingsPanel.unlockDurationInput();
       }
     }, 1000);
@@ -837,6 +940,7 @@ const App = (function () {
     TodoList.init(data.tasks);
     QuickLinks.init(data.links);
     SettingsPanel.init(data.name, data.duration);
+    BackgroundMusic.init();
 
     _wireTimerControls();
     _wireTodoForm();
