@@ -10,9 +10,9 @@
     (function () {
       try {
         var theme = localStorage.getItem('ppd_theme');
-        document.body.dataset.theme = theme === 'dark' ? 'dark' : 'light';
+        document.documentElement.dataset.theme = theme === 'dark' ? 'dark' : 'light';
       } catch (e) {
-        document.body.dataset.theme = 'light';
+        document.documentElement.dataset.theme = 'light';
       }
     })();
   </script>
@@ -44,6 +44,58 @@
   </header>
 
   <!-- ═══════════════════════════════════════════════
+       Settings Panel
+  ═══════════════════════════════════════════════ -->
+  <section class="widget widget--settings" aria-label="Settings">
+    <h2 class="widget__title">Settings</h2>
+
+    <form id="settings-name-form" class="settings__form" novalidate>
+      <label for="settings-name-input" class="settings__label">Display Name</label>
+      <input
+        id="settings-name-input"
+        type="text"
+        class="input"
+        placeholder="Your name"
+        maxlength="50"
+        autocomplete="name"
+        aria-describedby="settings-name-error"
+      />
+      <button type="submit" class="btn btn--primary" aria-label="Save display name">Save</button>
+      <p id="settings-name-error" class="inline-error" role="alert" aria-live="polite"></p>
+    </form>
+
+    <form id="settings-duration-form" class="settings__form" novalidate>
+      <label for="settings-duration-input" class="settings__label">Focus Duration (minutes)</label>
+      <input
+        id="settings-duration-input"
+        type="number"
+        class="input input--narrow"
+        min="1"
+        max="120"
+        placeholder="25"
+        aria-describedby="settings-duration-error"
+      />
+      <button type="submit" class="btn btn--primary" aria-label="Save focus duration">Save</button>
+      <p id="settings-duration-error" class="inline-error" role="alert" aria-live="polite"></p>
+    </form>
+
+    <div class="settings__form settings__form--theme">
+      <span class="settings__label">Theme</span>
+      <button id="theme-toggle" class="btn btn--primary" aria-pressed="false" aria-label="Toggle dark mode">🌙 Dark Mode</button>
+      <p id="settings-theme-status" class="inline-error" role="status" aria-live="polite" style="color:var(--color-text-muted)"></p>
+    </div>
+
+    <div class="settings__form settings__form--music">
+      <span class="settings__label">Background Music</span>
+      <div class="music-controls">
+        <button id="music-btn" class="btn btn--primary" aria-pressed="false" aria-label="Toggle music">▶ Play</button>
+      </div>
+      <p id="settings-music-status" class="inline-error" role="status" aria-live="polite" style="color:var(--color-text-muted)"></p>
+    </div>
+
+  </section>  
+
+  <!-- ═══════════════════════════════════════════════
        Placeholder Section (future features)
   ═══════════════════════════════════════════════
   <section class="widget widget--placeholder" aria-label="Coming soon">
@@ -61,8 +113,7 @@
     <h2 class="widget__title">Focus Timer</h2>
     <p id="timer-display" class="timer__display">25:00</p>
     <div class="timer__controls" role="group" aria-label="Timer controls">
-      <button id="timer-start" class="btn btn--primary" aria-label="Start timer">Start</button>
-      <button id="timer-stop"  class="btn btn--secondary" aria-label="Stop timer">Stop</button>
+      <button id="timer-switch" class="btn btn--primary" aria-pressed="false" aria-label="Toggle timer">Start</button>
       <button id="timer-reset" class="btn btn--secondary" aria-label="Reset timer">Reset</button>
     </div>
     <p id="timer-error" class="inline-error" role="alert" aria-live="polite"></p>
@@ -123,59 +174,6 @@
     <p id="links-capacity" class="capacity-msg"  aria-live="polite"></p>
     <div id="links-list" class="links__list" aria-label="Saved links" aria-live="polite"></div>
     <p id="links-empty" class="empty-state">No links yet. Add one above!</p>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════
-       Settings Panel
-  ═══════════════════════════════════════════════ -->
-  <section class="widget widget--settings" aria-label="Settings">
-    <h2 class="widget__title">Settings</h2>
-
-    <form id="settings-name-form" class="settings__form" novalidate>
-      <label for="settings-name-input" class="settings__label">Display Name</label>
-      <input
-        id="settings-name-input"
-        type="text"
-        class="input"
-        placeholder="Your name"
-        maxlength="50"
-        autocomplete="name"
-        aria-describedby="settings-name-error"
-      />
-      <button type="submit" class="btn btn--primary" aria-label="Save display name">Save</button>
-      <p id="settings-name-error" class="inline-error" role="alert" aria-live="polite"></p>
-    </form>
-
-    <form id="settings-duration-form" class="settings__form" novalidate>
-      <label for="settings-duration-input" class="settings__label">Focus Duration (minutes)</label>
-      <input
-        id="settings-duration-input"
-        type="number"
-        class="input input--narrow"
-        min="1"
-        max="120"
-        placeholder="25"
-        aria-describedby="settings-duration-error"
-      />
-      <button type="submit" class="btn btn--primary" aria-label="Save focus duration">Save</button>
-      <p id="settings-duration-error" class="inline-error" role="alert" aria-live="polite"></p>
-    </form>
-
-    <div class="settings__form settings__form--theme">
-      <span class="settings__label">Theme</span>
-      <button id="theme-toggle" class="btn btn--secondary" aria-pressed="false" aria-label="Toggle dark mode">🌙 Dark Mode</button>
-      <p id="settings-theme-status" class="inline-error" role="status" aria-live="polite" style="color:var(--color-text-muted)"></p>
-    </div>
-
-    <div class="settings__form settings__form--music">
-      <span class="settings__label">Background Music</span>
-      <div class="music-controls">
-        <button id="music-play-btn" class="btn btn--secondary" aria-label="Play background music">▶ Play</button>
-        <button id="music-stop-btn" class="btn btn--secondary" aria-label="Stop background music" disabled>■ Stop</button>
-      </div>
-      <p id="settings-music-status" class="inline-error" role="status" aria-live="polite" style="color:var(--color-text-muted)"></p>
-    </div>
-
   </section>
 
   <script type="module" src="js/app.js"></script>

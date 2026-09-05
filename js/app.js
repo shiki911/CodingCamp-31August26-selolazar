@@ -203,6 +203,7 @@ const AudioService = (function () {
 // ─────────────────────────────────────────────────────────
 const BackgroundMusic = (function () {
   let _audio = null;
+  let _play = 'not-play';
   let _playing = false;
 
   function _getAudio() {
@@ -219,6 +220,7 @@ const BackgroundMusic = (function () {
     const audio = _getAudio();
     if (!audio || _playing) return;
     audio.play().then(() => {
+      _play = 'play';
       _playing = true;
       _syncButtons();
       const statusEl = _getEl('settings-music-status');
@@ -237,6 +239,7 @@ const BackgroundMusic = (function () {
     if (!audio || !_playing) return;
     audio.pause();
     audio.currentTime = 0;
+    _play = 'not-play';
     _playing = false;
     _syncButtons();
     const statusEl = _getEl('settings-music-status');
@@ -248,17 +251,27 @@ const BackgroundMusic = (function () {
   }
 
   function _syncButtons() {
-    const playBtn = _getEl('music-play-btn');
-    const stopBtn = _getEl('music-stop-btn');
-    if (playBtn) playBtn.disabled = _playing;
-    if (stopBtn) stopBtn.disabled = !_playing;
-  }
+    const btn = _getEl("music-btn");
+    if (!btn) return;
+
+    btn.setAttribute("aria-pressed", _play == "play");
+    btn.textContent = _play == "play" ? "■ Stop" : "▶ Play";
+  }  
 
   function init() {
-    const playBtn = _getEl('music-play-btn');
-    const stopBtn = _getEl('music-stop-btn');
-    if (playBtn) playBtn.addEventListener('click', play);
-    if (stopBtn) stopBtn.addEventListener('click', stop);
+    const btn = _getEl('music-btn');
+
+    if (btn) {
+      btn.addEventListener("click", () => {
+        if (_play == "play") {
+          stop();
+        } else {
+          play();
+        }
+        _syncButtons();
+      });
+    }
+
     _syncButtons();
   }
 
@@ -360,6 +373,7 @@ const FocusTimer = (function () {
   // State ───────────────────────────────────────────────────
 
   let _state         = 'idle'; // idle | running | paused | completed
+  let _button        = 'not-running'; // running | not-running
   let _totalSeconds  = 25 * 60;
   let _remaining     = _totalSeconds;
   let _intervalId    = null;
@@ -375,10 +389,24 @@ const FocusTimer = (function () {
 
   function init(durationMinutes) {
     const mins = (durationMinutes && Number.isInteger(durationMinutes)) ? durationMinutes : 25;
+    const btn = _getEl('timer-switch');
     _totalSeconds = mins * 60;
     _remaining    = _totalSeconds;
     _state        = 'idle';
     _updateDisplay();
+
+    if (btn) {
+      btn.addEventListener("click", () => {
+        if (_button == "running") {
+          stop();
+        } else {
+          start();
+        }
+        _syncButtons();
+      });
+    }
+
+    _syncButtons();        
   }
 
   function setDuration(minutes) {
@@ -388,11 +416,20 @@ const FocusTimer = (function () {
     _updateDisplay();
   }
 
+  function _syncButtons() {
+    const btn = _getEl("timer-switch");
+    if (!btn) return;
+
+    btn.setAttribute("aria-pressed", _button == "running");
+    btn.textContent = _button == "running" ? "Stop" : "Start";
+  }  
+
   function start() {
     if (_state === 'running') return; // no-op guard
     if (_state === 'completed') return;
 
     _state = 'running';
+    _button = 'running';
     SettingsPanel.lockDurationInput();
 
     _intervalId = setInterval(() => {
@@ -419,6 +456,7 @@ const FocusTimer = (function () {
   function stop() {
     if (_state !== 'running') return;
     _state = 'paused';
+    _button = 'not-running';
     clearInterval(_intervalId);
     _intervalId = null;
 

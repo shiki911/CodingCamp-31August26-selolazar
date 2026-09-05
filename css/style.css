@@ -17,7 +17,7 @@
   --color-surface:       #ffffff;
   --color-border:        #374151;
   --color-text:          #1a1a1a;
-  --color-text-muted:    #666666;
+  --color-text-muted:    #302e2e;
   --color-accent:        #2563eb;
   --color-accent-hover:  #1d4ed8;
   --color-success:       #16a34a;
@@ -30,7 +30,7 @@
   --color-surface:       #1f2937;
   --color-border:        #e0e0e0;
   --color-text:          #f9fafb;
-  --color-text-muted:    #9ca3af;
+  --color-text-muted:    #d2dae7;
   --color-accent:        #60a5fa;
   --color-accent-hover:  #93c5fd;
   --color-success:       #4ade80;
@@ -48,7 +48,7 @@
 
 body {
   font-family: "Inter", sans-serif;
-  
+
   font-size: 1rem;
   line-height: 1.5;
   background-color: var(--color-bg);
@@ -103,13 +103,15 @@ body {
 /* ─── Widget shell ──────────────────────────────────────── */
 
 .widget {
-  backdrop-filter: blur(10px);
+  background-color: (in srgb, var(--color-surface) 10%, transparent)
 
-  border: 1px solid var(--color-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  border: 2.5px solid color-mix(in srgb, var(--color-border) 18%, transparent);
+
   border-radius: 1rem;
   padding: 1.25rem;
-
-  background-color: (in srgb, var(--color-surface) 10%, transparent)
 }
 
 /* ─── Greeting widget ───────────────────────────────────── */
@@ -305,7 +307,7 @@ body {
   padding: 0.4rem 0.65rem;
   border: 1px solid var(--color-border);
   border-radius: 0.4rem;
-  background-color: var(--color-bg);
+  background-color: color-mix(in srgb, var(--color-bg) 60%, transparent);
   color: var(--color-text);
   font-size: 1rem;
   flex: 1;
@@ -472,5 +474,53 @@ body {
   body {
     grid-template-columns: repeat(5, 1fr);
     max-width: 1800px;
+  }
+}
+
+
+/**
+ * Pure-logic functions for the TodoList widget, exported as an ES module
+ * so they can be imported and tested in Node.js without a browser.
+ *
+ * The same logic is mirrored inside the TodoList IIFE in app.js for the
+ * browser bundle (which cannot use import/export via a plain <script> tag).
+ */
+
+/**
+ * Validates a task description.
+ * @param {string} description
+ * @returns {{ valid: boolean, error: string | null }}
+ */
+export function validateTask(description) {
+  if (typeof description !== 'string' || description.trim().length === 0) {
+    return { valid: false, error: 'Task description cannot be empty or whitespace.' };
+  }
+  if (description.length > 500) {
+    return { valid: false, error: 'Task description must be 500 characters or fewer.' };
+  }
+  return { valid: true, error: null };
+}
+
+/**
+ * Serializes an array of Task objects to a JSON string.
+ * @param {Array<{id: string, description: string, completed: boolean, createdAt: number}>} tasks
+ * @returns {string}
+ */
+export function serializeTasks(tasks) {
+  return JSON.stringify(tasks);
+}
+
+/**
+ * Deserializes a JSON string back to an array of Task objects.
+ * Returns an empty array on parse failure or if the result is not an array.
+ * @param {string} json
+ * @returns {Array}
+ */
+export function deserializeTasks(json) {
+  try {
+    const parsed = JSON.parse(json);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (_e) {
+    return [];
   }
 }
