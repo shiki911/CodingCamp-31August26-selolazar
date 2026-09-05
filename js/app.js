@@ -152,18 +152,27 @@ const AudioService = (function () {
     if (!_tickAudio) return;
     // Restart from beginning so rapid calls don't pile up
     _tickAudio.currentTime = 0;
+    _tickAudio.volume = 0.35;
     _tickAudio.play().catch(() => {});
+  }
+
+  function stopTick(){
+    if (!_tickAudio) return;
+
+    _tickAudio.pause;
   }
 
   function playAlert() {
     if (!_isBrowser) return;
+
     _ensureLoaded();
-    if (_bellAudio) {
-      _bellAudio.currentTime = 0;
-      _bellAudio.play().catch(() => _synthAlert());
-    } else {
-      _synthAlert();
-    }
+    if (!_bellAudio) return;
+
+    _bellAudio.pause();
+    _bellAudio.currentTime = 0;
+    _bellAudio.volume = 1.0;
+
+    _bellAudio.play().catch(err => console.error(err));
   }
 
   function _synthAlert() {
@@ -184,7 +193,7 @@ const AudioService = (function () {
     } catch (_e) {}
   }
 
-  return { playTick, playAlert };
+  return { playTick, stopTick, playAlert };
 })();
 
 
@@ -387,26 +396,33 @@ const FocusTimer = (function () {
     SettingsPanel.lockDurationInput();
 
     _intervalId = setInterval(() => {
-      _remaining -= 1;
+      _remaining--;
       _updateDisplay();
-      AudioService.playTick();
 
       if (_remaining <= 0) {
         clearInterval(_intervalId);
         _intervalId = null;
-        _state = 'completed';
-        _updateDisplay();
+        _state = "completed";
+
+        AudioService.stopTick();
         AudioService.playAlert();
+
         SettingsPanel.unlockDurationInput();
+        _updateDisplay();
+        return;
       }
+
+      AudioService.playTick();
     }, 1000);
   }
 
   function stop() {
     if (_state !== 'running') return;
+    _state = 'paused';
     clearInterval(_intervalId);
     _intervalId = null;
-    _state = 'paused';
+
+    AudioService.stopTick();
     SettingsPanel.unlockDurationInput();
   }
 
