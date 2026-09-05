@@ -103,7 +103,7 @@ body {
 /* ─── Widget shell ──────────────────────────────────────── */
 
 .widget {
-  background-color: (in srgb, var(--color-surface) 10%, transparent)
+  background-color: (in srgb, var(--color-surface) 10%, transparent);
 
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
