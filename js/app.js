@@ -440,6 +440,7 @@ const FocusTimer = (function () {
         clearInterval(_intervalId);
         _intervalId = null;
         _state = "completed";
+        _button = "not-running";
 
         AudioService.stopTick();
         AudioService.playAlert();
